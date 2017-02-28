@@ -11,9 +11,7 @@ class Tour extends CI_Controller {
 	}
 
 	public function index(){
-		$this->load->view('layouts/header');
 		$this->load->view('tour/tour');
-		$this->load->view('layouts/footer');
 	}
 	
 }

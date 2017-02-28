@@ -20,6 +20,7 @@ class User extends CI_Controller {
 	
 	public function user_join(){
 		
+		$this->yield = false;
 		$user_id = $this->input->post("user_id", TRUE);
 		$user_pw = $this->input->post("user_pw", TRUE);
 		$user_nm = $this->input->post("user_nm", TRUE);
@@ -33,6 +34,7 @@ class User extends CI_Controller {
 	
 	public function user_login(){
 		
+		$this->yield = false;
 		$user_id = $this->input->post('user_id',TRUE);
 		
 		$newdata = array(
@@ -48,6 +50,7 @@ class User extends CI_Controller {
 	
 	public function user_logout(){
 		
+		$this->yield = false;
 		$this->session->sess_destroy();
 		echo "로그아웃성공";
 		exit;

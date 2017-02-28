@@ -17,8 +17,8 @@ class Board_model extends CI_Model {
 	}
 	
 	
-	public function gets($offset,$limit){
-		return $this->db->query("SELECT * FROM board ORDER BY board_id DESC LIMIT ".$offset.", ".$limit)->result();
+	public function gets($offset, $limit, $type){
+		return $this->db->query("SELECT * FROM board WHERE type = '".$type."' ORDER BY board_id DESC LIMIT ".$offset.", ".$limit)->result();
 	}
 	
 	public function count(){
@@ -26,9 +26,9 @@ class Board_model extends CI_Model {
 		return $query->num_rows();
 	}
 	
-	public function add($user_id, $title, $password, $contents){
+	public function add($title, $type, $contents, $user_id, $user_nm){
 		$this->db->set('reg_dt','NOW()',false);
-		$this->db->insert('board',array('user_id'=>$user_id,'title'=>$title,'password'=>$password,'contents'=>$contents));
+		$this->db->insert('board',array('title'=>$title,'type'=>$type,'contents'=>$contents,'user_id'=>$user_id,'user_nm'=>$user_nm));
 		return 'success';
 		//$this->db->insert_id(); //추가된행에대한 아이디
 		//echo $this->db->last_query(); //쿼리문출력

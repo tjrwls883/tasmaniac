@@ -20,7 +20,8 @@ class Board extends CI_Controller {
 		$this->pagination->initialize($config);
 		$data['pagination'] = $this->pagination->create_links();
 		
-		$page = $this->uri->segment(3,1);
+		$page = $this->uri->segment(4,1);
+		$type = $this->uri->segment(3,1);
 		
 		if ($page > 1){
 			$start = (($page/$config['per_page'])) * $config['per_page'];
@@ -31,50 +32,47 @@ class Board extends CI_Controller {
 		
 		$limit = $config['per_page'];
 		
-		$data['list'] = $this->board_model->gets($start, $limit);
-		$this->load->view('layouts/header');
+		$data['list'] = $this->board_model->gets($start, $limit, $type);
 		$this->load->view('board/list', $data);
-		$this->load->view('layouts/footer');
 		
 	}
 	
 	public function board_read(){
-		
-		$board_id = $this->uri->segment(3,1);
-		
+		echo $this->uri->segment(4,1);
+		$board_id = $this->uri->segment(4,1);
 		$data = $this->board_model->get($board_id);
-		
-		$this->load->view('layouts/header');
 		$this->load->view('board/read',array('data'=>$data));
-		$this->load->view('layouts/footer');
 		
 	}
 	
 	public function board_write(){
-		
-		$this->load->view('layouts/header');
-		$this->load->view('board/write');
-		$this->load->view('layouts/footer');
+	
+		if(@$this->session->userdata('logged_in')==TRUE){
+			$this->load->view('board/write');
+		}else{
+			$this->load->view('main');
+		}
 		
 	}
 	
 	public function add(){
 		
-		$user_id = $this->input->post("user_id", TRUE);
+		$this->yield = false;
+		$this->load->helper('url');
 		$title = $this->input->post("title", TRUE);
-		$password = $this->input->post("password", TRUE);
+		$type = $this->input->post("type", TRUE);
 		$contents = $this->input->post("contents", TRUE);
-
-		$this->board_model->add($user_id,  $title, $password, $contents);
-		
-		$this->load->view('layouts/header');
-		$this->load->view('board/list');
-		$this->load->view('layouts/footer');
-	
+		$user_id = $this->input->post("user_id", TRUE);
+		$user_nm = $this->input->post("user_nm", TRUE);
+			
+		$this->board_model->add($title, $type, $contents, $user_id, $user_nm);
+		redirect(get_instance()->common->getUrlReturn()."index.php/board/board_list/".$type);
+			
 	}
 	
 	function upload_image(){
-		//$this->yield = false;
+		
+		$this->yield = false;
 		// 사용자가 업로드 한 파일을 /static/user/ 디렉토리에 저장한다.
 		$config['upload_path'] = './web/upload/board_img';
 		// git,jpg,png 파일만 업로드를 허용한다.
