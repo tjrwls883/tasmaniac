@@ -1,6 +1,6 @@
 <div class="container" style="margin-top:50px;">
-	<script src="<?=get_instance()->common->getUrl()?>web/lib/ckeditor/ckeditor.js" charset="utf-8"></script>
-	<form action="<?=get_instance()->common->getUrl()?>index.php/board/add" method="post">
+	<script src="<?=base_url()?>web/lib/ckeditor/ckeditor.js" charset="utf-8"></script>
+	<form action="<?=base_url()?>index.php/board/add" method="post">
 	<div>
 		<input type="hidden" name="type" value="<?= $this->uri->segment(3,1);?>"/>
 		<input type="hidden" name="user_id" value="<?= $this->session->userdata('user_id');?>"/>
@@ -15,6 +15,6 @@
 </div>
 <script>
 CKEDITOR.replace('contents',{
-    filebrowserUploadUrl: '<?=get_instance()->common->getUrl()?>index.php/board/upload_image'
+    filebrowserUploadUrl: '<?=base_url()?>index.php/board/upload_image'
 });
 </script>

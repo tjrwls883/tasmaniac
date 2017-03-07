@@ -21,8 +21,8 @@ class Board_model extends CI_Model {
 		return $this->db->query("SELECT * FROM board WHERE type = '".$type."' ORDER BY board_id DESC LIMIT ".$offset.", ".$limit)->result();
 	}
 	
-	public function count(){
-		$query = $this->db->query("SELECT * FROM board");
+	public function count($board_id){
+		$query = $this->db->query("SELECT * FROM board WHERE board_id = '".$board_id."'");
 		return $query->num_rows();
 	}
 	

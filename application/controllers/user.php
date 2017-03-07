@@ -6,54 +6,68 @@ class User extends CI_Controller {
 
 		$this->load->database();
 		$this->load->model('user_model');
+		$this->load->helper('url');
 	}
 
-	public function test(){
-		$this->load->view('user/test');
-	}
-	
-	public function test2(){
-		echo '<meta http-equive="Content-Type" content="text/html; charset=utf-8" />';
-		$name = $this->input->post("name");
-		echo $name."님 반갑습니다!";
+	public function user_login(){
+		$this->load->view('user/login');
 	}
 	
 	public function user_join(){
+		$this->load->view('user/join');
+	}
+	
+	public function add(){
 		
-		$this->yield = false;
 		$user_id = $this->input->post("user_id", TRUE);
 		$user_pw = $this->input->post("user_pw", TRUE);
+		$hash_pw = password_hash($user_pw, PASSWORD_BCRYPT);
 		$user_nm = $this->input->post("user_nm", TRUE);
 		$email = $this->input->post("email", TRUE);
 		
-		$this->user_model->add($user_id, $user_pw, $user_nm, $email);
-		
-		echo $user_id." ".$user_pw." ".$user_nm." ".$email;
+		$this->user_model->add($user_id, $user_nm, $hash_pw, $email);
+		$this->load->view('main');
+		//redirect(base_url().index_page()."/main");
 		
 	}
 	
-	public function user_login(){
+	public function test(){
 		
-		$this->yield = false;
+		echo password_hash("abcd", PASSWORD_BCRYPT);
+	}
+	
+	public function login(){
+
 		$user_id = $this->input->post('user_id',TRUE);
+		$user_pw = $this->input->post('user_pw',TRUE);
 		
-		$newdata = array(
-				'user_id' => $user_id,
-				'logged_in' => TRUE
-		);
+		$data = $this->user_model->get($user_id);
 		
-		$this->session->set_userdata($newdata);
-		
-		echo "성공";
+		if($data==null){
+			$this->load->view('user/login');
+		}else{
+			if(password_verify($user_pw,$data->user_pw)){
+				
+				$logindata = array(
+						'user_id' => $data->user_id,
+						'user_nm' => $data->user_nm,
+						'logged_in' => TRUE
+				);
+				$this->session->set_userdata($logindata);
+				$this->load->view('main');
+				
+			}else{
+				$this->load->view('user/login');
+			}
+		}
 		
 	}
 	
-	public function user_logout(){
+	public function logout(){
 		
-		$this->yield = false;
 		$this->session->sess_destroy();
-		echo "로그아웃성공";
-		exit;
+		$this->load->view('main');
+		//redirect(base_url().index_page()."/main");
 		
 	}
 	

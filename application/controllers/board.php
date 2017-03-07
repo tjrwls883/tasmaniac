@@ -12,16 +12,17 @@ class Board extends CI_Controller {
 	public function board_list(){
 		
 		$this->load->library('pagination');
+		
+		$page = $this->uri->segment(4,1);
+		$type = $this->uri->segment(3,1);
+		
 		$config['base_url'] = "http://localhost/tasmaniac/index.php/board/board_list/";
-		$config['total_rows'] = $this->board_model->count();
+		$config['total_rows'] = $this->board_model->count($type);
 		$config['per_page'] = 20;
 		$config['uri_segment'] = 3;
 		
 		$this->pagination->initialize($config);
 		$data['pagination'] = $this->pagination->create_links();
-		
-		$page = $this->uri->segment(4,1);
-		$type = $this->uri->segment(3,1);
 		
 		if ($page > 1){
 			$start = (($page/$config['per_page'])) * $config['per_page'];
@@ -58,7 +59,6 @@ class Board extends CI_Controller {
 	public function add(){
 		
 		$this->yield = false;
-		$this->load->helper('url');
 		$title = $this->input->post("title", TRUE);
 		$type = $this->input->post("type", TRUE);
 		$contents = $this->input->post("contents", TRUE);
@@ -66,7 +66,7 @@ class Board extends CI_Controller {
 		$user_nm = $this->input->post("user_nm", TRUE);
 			
 		$this->board_model->add($title, $type, $contents, $user_id, $user_nm);
-		redirect(get_instance()->common->getUrlReturn()."index.php/board/board_list/".$type);
+		redirect(base_url()."index.php/board/board_list/".$type);
 			
 	}
 	

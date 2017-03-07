@@ -53,58 +53,6 @@ body {
 }
 
 
-/*  carousel  */
-
-#carousel-example-generic{
-	height: 250px;
-	background: url('../images/templatemo_carousel_bg.jpg') no-repeat center center;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	overflow-x: hidden;
-	margin-bottom:0;
-}
-
-
-/*  offcanvass  */
-#offcanvass{
-	position: fixed;
-	z-index: 1040;
-	top: 0;
-	right: 0;
-	-webkit-transition: 0.3s;
-	-o-transition: 0.3s;
-	transition: 0.3s;
-	-webkit-transform: translateX(320px);
-	-moz-transform: translateX(320px);
-	-ms-transform: translateX(320px);
-	-o-transform: translateX(320px);
-	transform: translateX(320px);
-	bottom: 0;
-	width: 300px;
-	padding: 30px 10px;
-	background: rgba(0,0,0,0.8);
-	-webkit-box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
-	-moz-box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
-	-ms-box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
-	box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
-}
-
-#offcanvass.fh5co-awake {
-  -webkit-transform: translateX(0px);
-  -moz-transform: translateX(0px);
-  -ms-transform: translateX(0px);
-  -o-transform: translateX(0px);
-  transform: translateX(0px);
-}
-
-.display_onoff{
-	display: none;
-}
-
-
-
 /*  board  */
 .board thead tr td{
 	font-weight: 700;
@@ -135,11 +83,14 @@ body {
 	width: 50px;
 }
 
+
+
 /*  fotter  */
 .footer{
-	border-top: 2px solid #cccccc;
+	border-top: 1px solid #cccccc;
 	margin-top: 50px;
 	height:120px;
+	color: #363636;
 }
 
 .footer_bottom_content{

@@ -15,14 +15,7 @@ class Common {
     	echo $query;
     	exit;
     }
-    
-    public function getUrl(){
-    	echo "http://localhost/tasmaniac/";
-    }
-    
-    public function getUrlReturn(){
-    	return "http://localhost/tasmaniac/";
-    }
+  
 }
 
 /* End of file Someclass.php */
